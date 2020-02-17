@@ -1,0 +1,183 @@
+{
+  "version": 1,
+  "projects": {
+    "onboarding": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/onboarding",
+      "sourceRoot": "apps/onboarding/src",
+      "prefix": "estructura-basica",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/onboarding",
+            "index": "apps/onboarding/src/index.html",
+            "main": "apps/onboarding/src/main.ts",
+            "polyfills": "apps/onboarding/src/polyfills.ts",
+            "tsConfig": "apps/onboarding/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/onboarding/src/favicon.ico",
+              "apps/onboarding/src/assets"
+            ],
+            "styles": ["apps/onboarding/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/onboarding/src/environments/environment.ts",
+                  "with": "apps/onboarding/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "onboarding:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "onboarding:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "onboarding:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/onboarding/tsconfig.app.json",
+              "apps/onboarding/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/onboarding/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/onboarding/jest.config.js",
+            "tsConfig": "apps/onboarding/tsconfig.spec.json",
+            "setupFile": "apps/onboarding/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "onboarding-e2e": {
+      "root": "apps/onboarding-e2e",
+      "sourceRoot": "apps/onboarding-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/onboarding-e2e/cypress.json",
+            "tsConfig": "apps/onboarding-e2e/tsconfig.e2e.json",
+            "devServerTarget": "onboarding:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "onboarding:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/onboarding-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/onboarding-e2e/**"]
+          }
+        }
+      }
+    },
+    "ui-new": {
+      "projectType": "library",
+      "root": "libs/ui-new",
+      "sourceRoot": "libs/ui-new/src",
+      "prefix": "estructura-basica",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/ui-new/tsconfig.lib.json",
+            "project": "libs/ui-new/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ui-new/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ui-new/tsconfig.lib.json",
+              "libs/ui-new/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/ui-new/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ui-new/jest.config.js",
+            "tsConfig": "libs/ui-new/tsconfig.spec.json",
+            "setupFile": "libs/ui-new/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "onboarding"
+}

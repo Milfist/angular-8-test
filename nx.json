@@ -1,0 +1,25 @@
+{
+  "npmScope": "estructura-basica",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "onboarding": {
+      "tags": []
+    },
+    "onboarding-e2e": {
+      "tags": [],
+      "implicitDependencies": ["onboarding"]
+    },
+    "ui-new": {
+      "tags": []
+    }
+  }
+}
